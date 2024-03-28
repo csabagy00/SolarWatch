@@ -2,5 +2,7 @@ namespace SolarWatch.Services;
 
 public interface IJsonProcessor
 {
-    public Sun Process(string data, string city, string date);
+    public Sun ProcessSun(string data, string city, string date);
+
+    public LatLon ProcessLatLon(string data);
 }
