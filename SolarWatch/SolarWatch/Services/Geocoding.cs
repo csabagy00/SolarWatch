@@ -20,6 +20,12 @@ public class Geocoding : IGeocodingApi
         
         _logger.LogInformation("Calling Geocoding API url: {url}", url);
 
+        if (client.DownloadString(url) == "[]")
+        {
+            _logger.LogError("Invalid city");
+            throw new Exception();
+        }
+
         return client.DownloadString(url);
     }
 }
