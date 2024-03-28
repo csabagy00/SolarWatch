@@ -11,8 +11,8 @@ public class JsonProcessor : IJsonProcessor
 
         Sun riseSet = new Sun
         {
-            Sunrise = DateTime.Parse(results.GetProperty("sunrise").GetString()),
-            Sunset = DateTime.Parse(results.GetProperty("sunset").GetString()),
+            Sunrise = results.GetProperty("sunrise").GetString(),
+            Sunset = results.GetProperty("sunset").GetString(),
             Date = date,
             City = city
         };

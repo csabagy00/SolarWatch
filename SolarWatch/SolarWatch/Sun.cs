@@ -2,9 +2,9 @@ namespace SolarWatch;
 
 public class Sun
 {
-    public DateTime Sunrise { get; set; }
+    public string Sunrise { get; set; }
     
-    public DateTime Sunset { get; set; }
+    public string Sunset { get; set; }
     
     public string Date { get; set; }
     
