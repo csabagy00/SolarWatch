@@ -17,7 +17,7 @@ public class SunController : ControllerBase
 
     [HttpGet]
     [Route("Get")]
-    public ActionResult<Sun> SunGet([Required]string city)
+    public ActionResult<Sun> SunGet([Required]string city, [Required]string date)
     {
         _logger.Log(LogLevel.Information, "Get Request");
         
