@@ -9,16 +9,24 @@ public class JsonProcessor : IJsonProcessor
         JsonDocument json = JsonDocument.Parse(data);
         JsonElement results = json.RootElement.GetProperty("results");
 
-        Sun riseSet = new Sun
+        try
         {
-            Sunrise = results.GetProperty("sunrise").GetString(),
-            Sunset = results.GetProperty("sunset").GetString(),
-            Date = date,
-            City = city
-        };
+            Sun riseSet = new Sun
+            {
+                Sunrise = results.GetProperty("sunrise").GetString(),
+                Sunset = results.GetProperty("sunset").GetString(),
+                Date = date,
+                City = city
+            };
 
-        return riseSet;
-
+            return riseSet;
+        }
+        catch (Exception e)
+        {
+            Console.WriteLine($"Error getting data: {e.Message}");
+            throw;
+        }
+        
     }
 
     public LatLon ProcessLatLon(string data)

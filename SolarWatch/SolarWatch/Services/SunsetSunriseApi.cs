@@ -18,7 +18,15 @@ public class SunsetSunriseApi : ISunsetSunriseApi
         using var client = new WebClient();
         
         _Logger.LogInformation("Calling SunsetSunrise API url: {url}", url);
+        
+        if (client.DownloadString(url) == "")
+        {
+            _Logger.LogError("Invalid date/date format");
+            throw new Exception();
+        }
 
-        return client.DownloadString(url);
+        string downloadString = client.DownloadString(url);
+            
+        return downloadString;
     }
 }

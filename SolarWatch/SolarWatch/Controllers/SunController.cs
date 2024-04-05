@@ -41,8 +41,8 @@ public class SunController : ControllerBase
         }
         catch (Exception e)
         {
-            _logger.LogError(e, "Error getting data");
-            return NotFound("Error getting data");
+            _logger.LogError(e, $"Error getting data \n{e.Message}");
+            return StatusCode(400);
         }
         
     }
