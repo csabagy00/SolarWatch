@@ -27,14 +27,14 @@ public class SunControllerTest
     }
 
     [Test]
-    public void SunGetReturnsNotFoundResultIfSunsetSunriseFails()
+    public async Task SunGetReturnsNotFoundResultIfSunsetSunriseFails()
     {
         //Arrange
         _sunsetSunriseApiMock.Setup(x => x.GetSun(It.IsAny<double>(), It.IsAny<double>(), It.IsAny<string>()))
             .Throws(new Exception());
         
         //Act
-        var result = _controller.SunGet("szeged", "2024-03-31");
+        var result = await _controller.SunGet("szeged", "2024-03-31");
         
         //Assert
         Assert.IsInstanceOf(typeof(NotFoundObjectResult), result.Result);
@@ -42,14 +42,14 @@ public class SunControllerTest
 
 
     [Test]
-    public void SunGetReturnsNotFoundResultIfGeoCodingFails()
+    public async Task SunGetReturnsNotFoundResultIfGeoCodingFails()
     {
         //Arrange
         var cityData = "{}";
         _geocodingMock.Setup(x => x.GetLatLon(cityData)).Throws(new Exception());
 
         //Act
-        var result = _controller.SunGet("szeged", "2024-03-29");
+        var result = await _controller.SunGet("szeged", "2024-03-29");
 
         //Assert
         Assert.IsInstanceOf(typeof(NotFoundObjectResult), result.Result);
@@ -57,7 +57,7 @@ public class SunControllerTest
 
 
     [Test]
-    public void SunGetReturnsOkResult()
+    public async Task SunGetReturnsOkResult()
     {
         //Arrange
         var expectedSun = new Sun();
@@ -65,15 +65,15 @@ public class SunControllerTest
         var sunsetData = "{}";
         var latLonData = "{}";
 
-        _geocodingMock.Setup(x => x.GetLatLon(It.IsAny<string>())).Returns(latLonData);
+        _geocodingMock.Setup(x => x.GetLatLon(It.IsAny<string>())).ReturnsAsync(latLonData);
         _sunsetSunriseApiMock.Setup(x => x.GetSun(It.IsAny<double>(), It.IsAny<double>(), It.IsAny<string>()))
-            .Returns(sunsetData);
+            .ReturnsAsync(sunsetData);
         _jsonProcessorMock.Setup(x => x.ProcessLatLon(latLonData)).Returns(expectedLatLon);
         _jsonProcessorMock.Setup(x => x.ProcessSun(sunsetData, It.IsAny<string>(), It.IsAny<string>()))
             .Returns(expectedSun);
         
         //Act
-        var result = _controller.SunGet("szeged", "2023-03-29");
+        var result = await _controller.SunGet("szeged", "2023-03-29");
         
         //Assert
         Assert.IsInstanceOf(typeof(OkObjectResult), result.Result);

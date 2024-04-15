@@ -24,16 +24,16 @@ public class SunController : ControllerBase
 
     [HttpGet]
     [Route("Get")]
-    public ActionResult<Sun> SunGet([Required]string city, [Required]string date)
+    public async Task<ActionResult<Sun>> SunGet([Required]string city, [Required]string date)
     {
         _logger.Log(LogLevel.Information, "Get Request");
         try
         {
-            string latLonData = _geocodingApi.GetLatLon(city);
+            string latLonData = await _geocodingApi.GetLatLon(city);
 
             LatLon latLon = _jsonProcessor.ProcessLatLon(latLonData);
 
-            string sunData = _sunsetSunriseApi.GetSun(latLon.Lat, latLon.Lon, date);
+            string sunData = await _sunsetSunriseApi.GetSun(latLon.Lat, latLon.Lon, date);
 
             Sun sun = _jsonProcessor.ProcessSun(sunData, city, date);
             
