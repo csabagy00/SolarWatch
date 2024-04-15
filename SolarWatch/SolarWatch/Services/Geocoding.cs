@@ -11,21 +11,23 @@ public class Geocoding : IGeocodingApi
         _logger = logger;
     }
 
-    public string GetLatLon(string city)
+    public async Task<string> GetLatLon(string city)
     {
         var apiKey = "3b56c738243bfacb244a70d9c4eb7998";
         var url = $"http://api.openweathermap.org/geo/1.0/direct?q={city}&limit=5&appid={apiKey}";
 
-        using var client = new WebClient();
+        using var client = new HttpClient();
         
         _logger.LogInformation("Calling Geocoding API url: {url}", url);
 
-        if (client.DownloadString(url) == "[]")
+        /*if (client.DownloadString(url) == "[]")
         {
             _logger.LogError("Invalid city");
             throw new Exception();
-        }
+        }*/
 
-        return client.DownloadString(url);
+        var response = await client.GetAsync(url);
+
+        return await response.Content.ReadAsStringAsync();
     }
 }
