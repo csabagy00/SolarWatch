@@ -11,7 +11,7 @@ using SolarWatch.Data;
 namespace SolarWatch.Migrations
 {
     [DbContext(typeof(SolarWatchContext))]
-    [Migration("20240419092045_InitialCreate")]
+    [Migration("20240419132355_InitialCreate")]
     partial class InitialCreate
     {
         /// <inheritdoc />
@@ -47,14 +47,14 @@ namespace SolarWatch.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int>("SunriseSunsetId")
+                    b.Property<int>("SunId")
                         .HasColumnType("int");
 
                     b.HasKey("Id");
 
                     b.HasIndex("LatLonId");
 
-                    b.HasIndex("SunriseSunsetId");
+                    b.HasIndex("SunId");
 
                     b.ToTable("Cities");
                 });
@@ -78,13 +78,21 @@ namespace SolarWatch.Migrations
                     b.ToTable("LatLon");
                 });
 
-            modelBuilder.Entity("SolarWatch.SunriseSunset", b =>
+            modelBuilder.Entity("SolarWatch.Sun", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int");
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<string>("City")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Date")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Sunrise")
                         .IsRequired()
@@ -96,7 +104,7 @@ namespace SolarWatch.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("SunriseSunsets");
+                    b.ToTable("Suns");
                 });
 
             modelBuilder.Entity("SolarWatch.City", b =>
@@ -107,15 +115,15 @@ namespace SolarWatch.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("SolarWatch.SunriseSunset", "SunriseSunset")
+                    b.HasOne("SolarWatch.Sun", "Sun")
                         .WithMany()
-                        .HasForeignKey("SunriseSunsetId")
+                        .HasForeignKey("SunId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.Navigation("LatLon");
 
-                    b.Navigation("SunriseSunset");
+                    b.Navigation("Sun");
                 });
 #pragma warning restore 612, 618
         }

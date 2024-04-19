@@ -25,17 +25,19 @@ namespace SolarWatch.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "SunriseSunsets",
+                name: "Suns",
                 columns: table => new
                 {
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
                     Sunrise = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    Sunset = table.Column<string>(type: "nvarchar(max)", nullable: false)
+                    Sunset = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Date = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    City = table.Column<string>(type: "nvarchar(max)", nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_SunriseSunsets", x => x.Id);
+                    table.PrimaryKey("PK_Suns", x => x.Id);
                 });
 
             migrationBuilder.CreateTable(
@@ -48,7 +50,7 @@ namespace SolarWatch.Migrations
                     State = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     Country = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     LatLonId = table.Column<int>(type: "int", nullable: false),
-                    SunriseSunsetId = table.Column<int>(type: "int", nullable: false)
+                    SunId = table.Column<int>(type: "int", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -60,9 +62,9 @@ namespace SolarWatch.Migrations
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
-                        name: "FK_Cities_SunriseSunsets_SunriseSunsetId",
-                        column: x => x.SunriseSunsetId,
-                        principalTable: "SunriseSunsets",
+                        name: "FK_Cities_Suns_SunId",
+                        column: x => x.SunId,
+                        principalTable: "Suns",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                 });
@@ -73,9 +75,9 @@ namespace SolarWatch.Migrations
                 column: "LatLonId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Cities_SunriseSunsetId",
+                name: "IX_Cities_SunId",
                 table: "Cities",
-                column: "SunriseSunsetId");
+                column: "SunId");
         }
 
         /// <inheritdoc />
@@ -88,7 +90,7 @@ namespace SolarWatch.Migrations
                 name: "LatLon");
 
             migrationBuilder.DropTable(
-                name: "SunriseSunsets");
+                name: "Suns");
         }
     }
 }
