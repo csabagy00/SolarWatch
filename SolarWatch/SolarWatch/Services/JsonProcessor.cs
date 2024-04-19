@@ -42,4 +42,19 @@ public class JsonProcessor : IJsonProcessor
 
         return latLon;
     }
+
+    public City ProcessCity(string data)
+    {
+        JsonDocument json = JsonDocument.Parse(data);
+        JsonElement element = json.RootElement.EnumerateArray().First();
+        
+        City city = new City
+        {
+            Name = element.GetProperty("name").ToString(),
+            Country = element.GetProperty("country").ToString(),
+            State = element.TryGetProperty("state", out element) ? element.GetProperty("state").ToString() : null
+        };
+
+        return city;
+    }
 }
