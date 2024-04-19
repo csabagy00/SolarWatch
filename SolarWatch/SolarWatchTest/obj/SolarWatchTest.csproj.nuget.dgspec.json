@@ -1,20 +1,20 @@
 {
   "format": 1,
   "restore": {
-    "E:\\Codecool\\advanced_modul-asp.net\\SolarWatch\\SolarWatch\\SolarWatchTest\\SolarWatchTest.csproj": {}
+    "C:\\Users\\csaba\\Codecool\\advanced\\SolarWatch\\SolarWatch\\SolarWatchTest\\SolarWatchTest.csproj": {}
   },
   "projects": {
-    "E:\\Codecool\\advanced_modul-asp.net\\SolarWatch\\SolarWatch\\SolarWatchTest\\SolarWatchTest.csproj": {
+    "C:\\Users\\csaba\\Codecool\\advanced\\SolarWatch\\SolarWatch\\SolarWatchTest\\SolarWatchTest.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "E:\\Codecool\\advanced_modul-asp.net\\SolarWatch\\SolarWatch\\SolarWatchTest\\SolarWatchTest.csproj",
+        "projectUniqueName": "C:\\Users\\csaba\\Codecool\\advanced\\SolarWatch\\SolarWatch\\SolarWatchTest\\SolarWatchTest.csproj",
         "projectName": "SolarWatchTest",
-        "projectPath": "E:\\Codecool\\advanced_modul-asp.net\\SolarWatch\\SolarWatch\\SolarWatchTest\\SolarWatchTest.csproj",
-        "packagesPath": "C:\\Users\\Csaba\\.nuget\\packages\\",
-        "outputPath": "E:\\Codecool\\advanced_modul-asp.net\\SolarWatch\\SolarWatch\\SolarWatchTest\\obj\\",
+        "projectPath": "C:\\Users\\csaba\\Codecool\\advanced\\SolarWatch\\SolarWatch\\SolarWatchTest\\SolarWatchTest.csproj",
+        "packagesPath": "C:\\Users\\csaba\\.nuget\\packages\\",
+        "outputPath": "C:\\Users\\csaba\\Codecool\\advanced\\SolarWatch\\SolarWatch\\SolarWatchTest\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
-          "C:\\Users\\Csaba\\AppData\\Roaming\\NuGet\\NuGet.Config"
+          "C:\\Users\\csaba\\AppData\\Roaming\\NuGet\\NuGet.Config"
         ],
         "originalTargetFrameworks": [
           "net7.0"
@@ -26,8 +26,8 @@
           "net7.0": {
             "targetAlias": "net7.0",
             "projectReferences": {
-              "E:\\Codecool\\advanced_modul-asp.net\\SolarWatch\\SolarWatch\\SolarWatch\\SolarWatch.csproj": {
-                "projectPath": "E:\\Codecool\\advanced_modul-asp.net\\SolarWatch\\SolarWatch\\SolarWatch\\SolarWatch.csproj"
+              "C:\\Users\\csaba\\Codecool\\advanced\\SolarWatch\\SolarWatch\\SolarWatch\\SolarWatch.csproj": {
+                "projectPath": "C:\\Users\\csaba\\Codecool\\advanced\\SolarWatch\\SolarWatch\\SolarWatch\\SolarWatch.csproj"
               }
             }
           }
@@ -42,6 +42,10 @@
         "net7.0": {
           "targetAlias": "net7.0",
           "dependencies": {
+            "Microsoft.EntityFrameworkCore.SqlServer": {
+              "target": "Package",
+              "version": "[7.0.14, )"
+            },
             "Microsoft.NET.Test.Sdk": {
               "target": "Package",
               "version": "[17.7.1, )"
@@ -83,21 +87,21 @@
               "privateAssets": "all"
             }
           },
-          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\7.0.408\\RuntimeIdentifierGraph.json"
+          "runtimeIdentifierGraphPath": "C:\\Users\\csaba\\.dotnet\\sdk\\7.0.407\\RuntimeIdentifierGraph.json"
         }
       }
     },
-    "E:\\Codecool\\advanced_modul-asp.net\\SolarWatch\\SolarWatch\\SolarWatch\\SolarWatch.csproj": {
+    "C:\\Users\\csaba\\Codecool\\advanced\\SolarWatch\\SolarWatch\\SolarWatch\\SolarWatch.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "E:\\Codecool\\advanced_modul-asp.net\\SolarWatch\\SolarWatch\\SolarWatch\\SolarWatch.csproj",
+        "projectUniqueName": "C:\\Users\\csaba\\Codecool\\advanced\\SolarWatch\\SolarWatch\\SolarWatch\\SolarWatch.csproj",
         "projectName": "SolarWatch",
-        "projectPath": "E:\\Codecool\\advanced_modul-asp.net\\SolarWatch\\SolarWatch\\SolarWatch\\SolarWatch.csproj",
-        "packagesPath": "C:\\Users\\Csaba\\.nuget\\packages\\",
-        "outputPath": "E:\\Codecool\\advanced_modul-asp.net\\SolarWatch\\SolarWatch\\SolarWatch\\obj\\",
+        "projectPath": "C:\\Users\\csaba\\Codecool\\advanced\\SolarWatch\\SolarWatch\\SolarWatch\\SolarWatch.csproj",
+        "packagesPath": "C:\\Users\\csaba\\.nuget\\packages\\",
+        "outputPath": "C:\\Users\\csaba\\Codecool\\advanced\\SolarWatch\\SolarWatch\\SolarWatch\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
-          "C:\\Users\\Csaba\\AppData\\Roaming\\NuGet\\NuGet.Config"
+          "C:\\Users\\csaba\\AppData\\Roaming\\NuGet\\NuGet.Config"
         ],
         "originalTargetFrameworks": [
           "net7.0"
@@ -124,6 +128,10 @@
             "Microsoft.AspNetCore.OpenApi": {
               "target": "Package",
               "version": "[7.0.17, )"
+            },
+            "Microsoft.EntityFrameworkCore.SqlServer": {
+              "target": "Package",
+              "version": "[7.0.14, )"
             },
             "Moq": {
               "target": "Package",
@@ -153,7 +161,7 @@
               "privateAssets": "all"
             }
           },
-          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\7.0.408\\RuntimeIdentifierGraph.json"
+          "runtimeIdentifierGraphPath": "C:\\Users\\csaba\\.dotnet\\sdk\\7.0.407\\RuntimeIdentifierGraph.json"
         }
       }
     }
