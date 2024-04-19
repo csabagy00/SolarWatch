@@ -1,5 +1,6 @@
 using System.ComponentModel.DataAnnotations;
 using Microsoft.AspNetCore.Mvc;
+using SolarWatch.Data;
 using SolarWatch.Services;
 
 namespace SolarWatch.Controllers;
@@ -27,6 +28,20 @@ public class SunController : ControllerBase
     public async Task<ActionResult<Sun>> SunGet([Required]string city, [Required]string date)
     {
         _logger.Log(LogLevel.Information, "Get Request");
+        await using var dbContext = new SolarWatchContext();
+
+        var selectedCity = dbContext.Cities.FirstOrDefault(c => c.Name == city);
+
+        if (selectedCity != null)
+        {
+            return Ok(new Sun
+            {
+                City = selectedCity.Name,
+                Sunrise = selectedCity.SunriseSunset.Sunrise,
+                Sunset = selectedCity.SunriseSunset.Sunset
+            });
+        }
+        
         try
         {
             string latLonData = await _geocodingApi.GetLatLon(city);
