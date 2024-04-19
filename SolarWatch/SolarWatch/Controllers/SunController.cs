@@ -34,16 +34,13 @@ public class SunController : ControllerBase
 
         if (selectedCity != null)
         {
-            return Ok(new Sun
-            {
-                City = selectedCity.Name,
-                Sunrise = selectedCity.SunriseSunset.Sunrise,
-                Sunset = selectedCity.SunriseSunset.Sunset
-            });
+            Console.WriteLine("From DB");
+            return Ok(selectedCity.Sun);
         }
         
         try
         {
+            Console.WriteLine("From External API");
             string latLonData = await _geocodingApi.GetLatLon(city);
 
             LatLon latLon = _jsonProcessor.ProcessLatLon(latLonData);
@@ -51,6 +48,15 @@ public class SunController : ControllerBase
             string sunData = await _sunsetSunriseApi.GetSun(latLon.Lat, latLon.Lon, date);
 
             Sun sun = _jsonProcessor.ProcessSun(sunData, city, date);
+
+            City newCityEntity = _jsonProcessor.ProcessCity(latLonData);
+            
+            newCityEntity.SetLatLon(latLon.Lat, latLon.Lon);
+            newCityEntity.SetSunriseSunset(sun.Sunrise, sun.Sunset);
+
+            await dbContext.Cities.AddAsync(newCityEntity);
+            await dbContext.Suns.AddAsync(sun);
+            await dbContext.LatLons.AddAsync(latLon);
             
             return Ok(sun);
         }
