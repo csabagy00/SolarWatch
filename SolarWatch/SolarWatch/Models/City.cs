@@ -6,18 +6,18 @@ public class City
     
     public string Name { get; init; }
     
-    public string State { get; init; }
+    public string? State { get; init; }
     
     public string Country { get; init; }
-    
-    public LatLon LatLon { get; init; }
 
-    public SunriseSunset SunriseSunset { get; init; } = new SunriseSunset();
+    public LatLon LatLon { get; init; } = new LatLon();
+
+    public Sun Sun { get; init; } = new Sun();
 
     public void SetSunriseSunset(string sunrise, string sunset)
     {
-        SunriseSunset.Sunrise = sunrise;
-        SunriseSunset.Sunset = sunset;
+        Sun.Sunrise = sunrise;
+        Sun.Sunset = sunset;
     }
 
     public void SetLatLon(double lat, double lon)
@@ -28,11 +28,11 @@ public class City
 
     public string GetSunrise()
     {
-        return SunriseSunset.Sunrise;
+        return Sun.Sunrise;
     }
     
     public string GetSunset()
     {
-        return SunriseSunset.Sunset;
+        return Sun.Sunset;
     }
 }
