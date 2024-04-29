@@ -5,12 +5,12 @@ namespace SolarWatch.Services;
 
 public class SunsetSunriseApi : ISunsetSunriseApi
 {
-    public ILogger<SunsetSunriseApi> _Logger;
-    public readonly SolarWatchContext _dbContext;
+    private ILogger<SunsetSunriseApi> _logger;
+    private readonly SolarWatchContext _dbContext;
 
     public SunsetSunriseApi(ILogger<SunsetSunriseApi> logger, SolarWatchContext dbContext)
     {
-        _Logger = logger;
+        _logger = logger;
         _dbContext = dbContext;
     }
 
@@ -20,7 +20,7 @@ public class SunsetSunriseApi : ISunsetSunriseApi
 
         using var client = new HttpClient();
         
-        _Logger.LogInformation("Calling SunsetSunrise API url: {url}", url);
+        _logger.LogInformation("Calling SunsetSunrise API url: {url}", url);
         
         var response = await client.GetAsync(url);
 
@@ -28,7 +28,7 @@ public class SunsetSunriseApi : ISunsetSunriseApi
         
         if (returnV == "")
         {
-            _Logger.LogError("Invalid date/date format");
+            _logger.LogError("Invalid date/date format");
             throw new Exception();
         }
 
