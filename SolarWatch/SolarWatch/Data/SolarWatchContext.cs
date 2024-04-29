@@ -13,6 +13,6 @@ public class SolarWatchContext : DbContext
     protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
     {
         optionsBuilder.UseSqlServer(
-            "Server=localhost,1433;Database=WeatherApi;User Id=sa;Password=Admin12345;Encrypt=false;");
+            "Server=localhost,1433;Database=WeatherApi;User Id=sa;Password=Admin12345Admin;Encrypt=false;");
     }
 }   
