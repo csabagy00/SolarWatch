@@ -1,14 +1,17 @@
 using System.Net;
+using SolarWatch.Data;
 
 namespace SolarWatch.Services;
 
 public class SunsetSunriseApi : ISunsetSunriseApi
 {
     public ILogger<SunsetSunriseApi> _Logger;
+    public readonly SolarWatchContext _dbContext;
 
-    public SunsetSunriseApi(ILogger<SunsetSunriseApi> logger)
+    public SunsetSunriseApi(ILogger<SunsetSunriseApi> logger, SolarWatchContext dbContext)
     {
         _Logger = logger;
+        _dbContext = dbContext;
     }
 
     public async Task<string> GetSun(double lat, double lon, string date)
@@ -30,5 +33,23 @@ public class SunsetSunriseApi : ISunsetSunriseApi
         }
 
         return returnV;
+    }
+
+    public void AddSun(Sun sun)
+    {
+        _dbContext.Add(sun);
+        _dbContext.SaveChanges();
+    }
+    
+    public void AddCity(City city)
+    {
+        _dbContext.Add(city);
+        _dbContext.SaveChanges();
+    }
+    
+    public void AddLatLon(LatLon latLon)
+    {
+        _dbContext.Add(latLon);
+        _dbContext.SaveChanges();
     }
 }
