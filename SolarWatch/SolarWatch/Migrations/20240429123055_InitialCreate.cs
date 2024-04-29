@@ -47,7 +47,7 @@ namespace SolarWatch.Migrations
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
                     Name = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    State = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    State = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     Country = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     LatLonId = table.Column<int>(type: "int", nullable: false),
                     SunId = table.Column<int>(type: "int", nullable: false)

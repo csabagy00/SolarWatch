@@ -11,7 +11,7 @@ using SolarWatch.Data;
 namespace SolarWatch.Migrations
 {
     [DbContext(typeof(SolarWatchContext))]
-    [Migration("20240419132355_InitialCreate")]
+    [Migration("20240429123055_InitialCreate")]
     partial class InitialCreate
     {
         /// <inheritdoc />
@@ -44,7 +44,6 @@ namespace SolarWatch.Migrations
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("State")
-                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<int>("SunId")
