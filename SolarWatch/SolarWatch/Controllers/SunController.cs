@@ -30,12 +30,12 @@ public class SunController : ControllerBase
         _logger.Log(LogLevel.Information, "Get Request");
         await using var dbContext = new SolarWatchContext();
 
-        var selectedCity = dbContext.Cities.FirstOrDefault(c => c.Name == city);
+        var selectedSun = dbContext.Suns.FirstOrDefault(s => s.City == city && s.Date == date);
 
-        if (selectedCity != null)
+        if (selectedSun != null)
         {
             Console.WriteLine("From DB");
-            return Ok(selectedCity.Sun);
+            return Ok(selectedSun);
         }
         
         try
@@ -46,19 +46,17 @@ public class SunController : ControllerBase
             LatLon latLon = _jsonProcessor.ProcessLatLon(latLonData);
 
             string sunData = await _sunsetSunriseApi.GetSun(latLon.Lat, latLon.Lon, date);
+            
+            City newCityEntity = _jsonProcessor.ProcessCity(latLonData);
 
             Sun sun = _jsonProcessor.ProcessSun(sunData, city, date);
 
-            Console.WriteLine(sun.Date);
-            
-            City newCityEntity = _jsonProcessor.ProcessCity(latLonData);
-            
-            newCityEntity.SetLatLon(latLon.Lat, latLon.Lon);
-            newCityEntity.SetSunriseSunset(sun.Sunrise, sun.Sunset);
+            newCityEntity.LatLon = latLon;
+            newCityEntity.Sun = sun;
+
+            Console.WriteLine(sun.City);
 
             _sunsetSunriseApi.AddCity(newCityEntity);
-            _sunsetSunriseApi.AddSun(sun);
-            _sunsetSunriseApi.AddLatLon(latLon);
             
             return Ok(sun);
         }
