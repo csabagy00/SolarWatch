@@ -1,3 +1,4 @@
+using SolarWatch.Data;
 using SolarWatch.Services;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -10,8 +11,10 @@ builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
 builder.Services.AddSingleton<IJsonProcessor, JsonProcessor>();
-builder.Services.AddSingleton<ISunsetSunriseApi, SunsetSunriseApi>();
+builder.Services.AddTransient<ISunsetSunriseApi, SunsetSunriseApi>();
 builder.Services.AddSingleton<IGeocodingApi, Geocoding>();
+
+builder.Services.AddDbContext<SolarWatchContext>();
 
 var app = builder.Build();
 
