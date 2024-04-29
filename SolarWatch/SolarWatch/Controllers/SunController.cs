@@ -56,11 +56,9 @@ public class SunController : ControllerBase
             newCityEntity.SetLatLon(latLon.Lat, latLon.Lon);
             newCityEntity.SetSunriseSunset(sun.Sunrise, sun.Sunset);
 
-            await dbContext.Cities.AddAsync(newCityEntity);
-            await dbContext.Suns.AddAsync(sun);
-            await dbContext.LatLon.AddAsync(latLon);
-
-            await dbContext.SaveChangesAsync();
+            _sunsetSunriseApi.AddCity(newCityEntity);
+            _sunsetSunriseApi.AddSun(sun);
+            _sunsetSunriseApi.AddLatLon(latLon);
             
             return Ok(sun);
         }
