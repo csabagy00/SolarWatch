@@ -2,17 +2,17 @@ namespace SolarWatch;
 
 public class City
 {
-    public int Id { get; init; }
+    public int Id { get; set; }
     
-    public string Name { get; init; }
+    public string Name { get; set; }
     
-    public string? State { get; init; }
+    public string? State { get; set; }
     
-    public string Country { get; init; }
+    public string Country { get; set; }
 
-    public LatLon LatLon { get; init; } = new LatLon();
+    public LatLon LatLon { get; set; }
 
-    public Sun Sun { get; init; } = new Sun();
+    public Sun Sun { get; set; } 
 
     public void SetSunriseSunset(string sunrise, string sunset)
     {
