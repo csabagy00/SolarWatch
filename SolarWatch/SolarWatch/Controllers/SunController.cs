@@ -49,6 +49,8 @@ public class SunController : ControllerBase
 
             Sun sun = _jsonProcessor.ProcessSun(sunData, city, date);
 
+            Console.WriteLine(sun.Date);
+            
             City newCityEntity = _jsonProcessor.ProcessCity(latLonData);
             
             newCityEntity.SetLatLon(latLon.Lat, latLon.Lon);
@@ -56,7 +58,9 @@ public class SunController : ControllerBase
 
             await dbContext.Cities.AddAsync(newCityEntity);
             await dbContext.Suns.AddAsync(sun);
-            await dbContext.LatLons.AddAsync(latLon);
+            await dbContext.LatLon.AddAsync(latLon);
+
+            await dbContext.SaveChangesAsync();
             
             return Ok(sun);
         }
