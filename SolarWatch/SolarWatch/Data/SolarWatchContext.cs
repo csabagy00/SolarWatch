@@ -8,7 +8,7 @@ public class SolarWatchContext : DbContext
     
     public DbSet<Sun> Suns { get; set; }
     
-    public DbSet<LatLon> LatLons { get; set; }
+    public DbSet<LatLon> LatLon { get; set; }
 
     protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
     {
