@@ -21,6 +21,7 @@ builder.Services.AddTransient<ISunsetSunriseApi, SunsetSunriseApi>();
 builder.Services.AddSingleton<IGeocodingApi, Geocoding>();
 
 builder.Services.AddDbContext<SolarWatchContext>();
+builder.Services.AddDbContext<UsersContext>();
 
 builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
     .AddJwtBearer(options =>
@@ -31,7 +32,6 @@ builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
                 .Build();
         
         var secretValue = config["E:\\user-s"];
-        
         
         options.TokenValidationParameters = new TokenValidationParameters()
         {
