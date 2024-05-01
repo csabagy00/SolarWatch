@@ -25,7 +25,7 @@ public class SunController : ControllerBase
     }
 
     [HttpGet]
-    [Route("Get"), Authorize]
+    [Route("Get"), Authorize(Roles = "User, Admin")]
     public async Task<ActionResult<Sun>> SunGet([Required]string city, [Required]string date)
     {
         _logger.Log(LogLevel.Information, "Get Request");
