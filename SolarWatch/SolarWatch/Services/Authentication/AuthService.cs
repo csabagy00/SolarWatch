@@ -13,16 +13,19 @@ public class AuthService : IAuthService
         _tokenService = tokenService;
     }
 
-    public async Task<AuthResult> RegisterAsync(string email, string username, string password)
+    public async Task<AuthResult> RegisterAsync(string email, string username, string password, string role)
     {
-        var result = await _userManager.CreateAsync(new IdentityUser { UserName = username, Email = email }, password);
+        var user = new IdentityUser { UserName = username, Email = email };
+        var result = await _userManager.CreateAsync(user, password);
 
         if (!result.Succeeded)
             return FailedRegistration(result, email, username);
 
+        await _userManager.AddToRoleAsync(user, role);
         return new AuthResult(true, email, username, "");
     }
 
+    
     public async Task<AuthResult> LoginAsync(string email, string password)
     {
         var managedUser = await _userManager.FindByEmailAsync(email);
@@ -30,10 +33,18 @@ public class AuthService : IAuthService
         if (managedUser == null)
             return InvalidEmail(email);
 
-        var accessToken = _tokenService.CreateToken(managedUser);
+        var isPasswordValid = await _userManager.CheckPasswordAsync(managedUser, password);
+
+        if (!isPasswordValid)
+            return InvalidPassword(email, managedUser.UserName);
+
+        var roles = await _userManager.GetRolesAsync(managedUser);
+        var accessToken = _tokenService.CreateToken(managedUser, roles[0]);
+
         return new AuthResult(true, managedUser.Email, managedUser.UserName, accessToken);
     }
 
+    
     private static AuthResult InvalidEmail(string email)
     {
         var result = new AuthResult(false, email, "", "");
@@ -41,7 +52,14 @@ public class AuthService : IAuthService
         return result;
     }
 
-    private static AuthResult FailedRegistration(IdentityResult result, string email, string username)
+    private static AuthResult InvalidPassword(string email, string username)
+    {
+        var result = new AuthResult(false, email, username, "");
+        result.ErrorMessages.Add("Bad credentials", "Invalid password");
+        return result;
+    }
+
+private static AuthResult FailedRegistration(IdentityResult result, string email, string username)
     {
         var authResult = new AuthResult(false, email, username, "");
 
