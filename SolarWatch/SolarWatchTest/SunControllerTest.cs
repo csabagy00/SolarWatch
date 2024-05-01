@@ -3,6 +3,7 @@ using Microsoft.Extensions.Logging;
 using Moq;
 using SolarWatch;
 using SolarWatch.Controllers;
+using SolarWatch.Data;
 using SolarWatch.Services;
 
 namespace SolarWatchTest;
@@ -14,6 +15,7 @@ public class SunControllerTest
     private Mock<IJsonProcessor> _jsonProcessorMock;
     private Mock<ISunsetSunriseApi> _sunsetSunriseApiMock;
     private Mock<IGeocodingApi> _geocodingMock;
+    private Mock<SolarWatchContext> _dbContext;
     private SunController _controller;
 
     [SetUp]
@@ -23,7 +25,8 @@ public class SunControllerTest
         _jsonProcessorMock = new Mock<IJsonProcessor>();
         _sunsetSunriseApiMock = new Mock<ISunsetSunriseApi>();
         _geocodingMock = new Mock<IGeocodingApi>();
-        _controller = new SunController(_loggerMock.Object, _jsonProcessorMock.Object, _geocodingMock.Object, _sunsetSunriseApiMock.Object);
+        _dbContext = new Mock<SolarWatchContext>();
+        _controller = new SunController(_loggerMock.Object, _jsonProcessorMock.Object, _geocodingMock.Object, _sunsetSunriseApiMock.Object, _dbContext.Object);
     }
 
     [Test]
