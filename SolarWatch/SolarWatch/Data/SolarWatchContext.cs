@@ -12,7 +12,7 @@ public class SolarWatchContext : DbContext
 
     protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
     {
-        optionsBuilder.UseSqlServer(
-            "Server=localhost,1433;Database=SolarWatch;User Id=sa;Password=Admin12345Admin;Encrypt=false;");
+        var config = new ConfigurationBuilder().AddUserSecrets<Program>().Build();
+        optionsBuilder.UseSqlServer(config["E:\\user-secrets\\connection"]);
     }
 }   
