@@ -1,4 +1,5 @@
 using System.ComponentModel.DataAnnotations;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using SolarWatch.Data;
 using SolarWatch.Services;
@@ -24,7 +25,7 @@ public class SunController : ControllerBase
     }
 
     [HttpGet]
-    [Route("Get")]
+    [Route("Get"), Authorize]
     public async Task<ActionResult<Sun>> SunGet([Required]string city, [Required]string date)
     {
         _logger.Log(LogLevel.Information, "Get Request");
