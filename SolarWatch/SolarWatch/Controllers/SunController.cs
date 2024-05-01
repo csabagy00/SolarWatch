@@ -104,7 +104,31 @@ public class SunController : ControllerBase
         }
         catch (Exception e)
         {
-            Console.WriteLine(e);
+            _logger.LogError(e, "Error occured while posting.");
+            throw;
+        }
+    }
+
+    [HttpDelete("Delete"), Authorize(Roles = "Admin")]
+    public async Task<ActionResult<Sun>> SunDelete([Required] int id)
+    {
+        try
+        {
+            _logger.Log(LogLevel.Information, "Delete request");
+
+            var selected = _dbContext.Suns.FirstOrDefault(s => s.Id == id);
+
+            if (selected == null)
+                return NotFound();
+            
+            _dbContext.Suns.Remove(selected);
+            await _dbContext.SaveChangesAsync();
+
+            return Ok(selected);
+        }
+        catch (Exception e)
+        {
+            _logger.LogError(e, "Error occured while deleting.");
             throw;
         }
     }
