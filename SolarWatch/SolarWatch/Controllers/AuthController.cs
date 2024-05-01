@@ -23,7 +23,12 @@ public class AuthController : ControllerBase
         if (!ModelState.IsValid)
             return BadRequest(ModelState);
 
-        var result = await _authService.RegisterAsync(request.Email, request.Username, request.Password);
+        var config =
+            new ConfigurationBuilder()
+                .AddJsonFile("appsettings.json", optional: false, reloadOnChange: true)
+                .Build();
+
+        var result = await _authService.RegisterAsync(request.Email, request.Username, request.Password, config["Roles:User"]);
 
         if (!result.Success)
         {
