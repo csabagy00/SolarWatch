@@ -18,6 +18,10 @@ AddIdentity();
 
 var app = builder.Build();
 
+using var scope = app.Services.CreateScope(); // AuthenticationSeeder is a scoped service, therefore we need a scope instance to access it
+var authenticationSeeder = scope.ServiceProvider.GetRequiredService<AuthenticationSeeder>();
+authenticationSeeder.AddRoles();
+
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())
 {
@@ -46,6 +50,7 @@ void AddServices()
     builder.Services.AddSingleton<IGeocodingApi, Geocoding>();
     builder.Services.AddScoped<IAuthService, AuthService>();
     builder.Services.AddScoped<ITokenService, TokenService>();
+    builder.Services.AddScoped<AuthenticationSeeder>();
 }
 
 void ConfigureSwagger()
@@ -127,5 +132,6 @@ void AddIdentity()
             options.Password.RequireUppercase = false;
             options.Password.RequireLowercase = false;
         })
+        .AddRoles<IdentityRole>()
         .AddEntityFrameworkStores<UsersContext>();
 }
