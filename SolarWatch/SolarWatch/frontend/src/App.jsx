@@ -9,11 +9,10 @@ import MainPage from './pages/MainPage'
 
 function App() {
   const [token, setToken] = useState("")
-  const [current, setCurrent] = useState("")
 
   return (
     <BrowserRouter>
-      <NavBar current={current}/>
+      <NavBar token={token} setToken={setToken}/>
         <Routes>
           <Route path='/' element={<MainPage token={token}/>}/>
           <Route path='/login' element={<Login setToken={setToken}/>}/>
