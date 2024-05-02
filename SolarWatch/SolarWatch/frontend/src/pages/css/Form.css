@@ -1,0 +1,44 @@
+.formDiv {
+  margin: 50px auto; /* Center the form horizontally */
+  max-width: 400px; /* Set maximum width for the form */
+  background-color: #7a7a7a; /* Background color for the form */
+  padding: 20px; /* Padding around the form */
+  border-radius: 10px; /* Rounded corners for the form */
+  box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1); /* Drop shadow for the form */
+}
+
+.regInput {
+  margin-bottom: 15px; /* Spacing between input fields */
+}
+
+.regInput label {
+  display: inline-block; /* Make labels inline with inputs */
+  margin-bottom: 5px; /* Spacing between label and input */
+  font-weight: bold; /* Bold font for labels */
+  color: rgb(255, 255, 255);
+}
+
+.regInput input {
+  width: 100%; /* Make inputs fill the entire width */
+  padding: 10px; /* Padding inside input fields */
+  border: 1px solid #ffffff; /* Border around input fields */
+  border-radius: 10px; /* Rounded corners for input fields */
+  box-sizing: border-box; /* Include padding and border in input's total width */
+  font-size: medium;
+}
+
+.formDiv button[type="submit"] {
+  width: 100%; /* Make the button fill the entire width */
+  padding: 10px; /* Padding inside the button */
+  background-color: #EF6900; /* Background color for the button */
+  color: rgb(0, 0, 0); /* Text color for the button */
+  font-weight: bolder;
+  border: none; /* Remove border from the button */
+  border-radius: 10px; /* Rounded corners for the button */
+  cursor: pointer; /* Show pointer cursor on hover */
+  font-size: 15px;
+}
+
+.formDiv button[type="submit"]:hover {
+    background-color: #a84900; /* Darker background color on hover */
+}
