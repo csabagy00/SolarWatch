@@ -23,9 +23,9 @@ function Login({ setToken }){
       if(response.ok){
         setEmail("")
         setPassword("")
-        console.log("Login successful");
-        const result = response.json()
-        console.log(result);
+        console.log("Login successful")
+        const result = await response.json()
+        setToken(result.token)
       }
       
     } catch (error) {
