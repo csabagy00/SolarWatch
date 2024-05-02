@@ -1,0 +1,24 @@
+.maindiv {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.notloggedin {
+  margin-top: 40px;
+  display: flex;
+  justify-content: space-around;
+  color: #EF6900;
+  align-items: center;
+  background-color: #1b1b1b;
+  border: solid;
+  border-color: #6e6e6e;
+  border-radius: 20px;
+  height: 100px;
+  max-width: fit-content;
+}
+
+.mustlogin {
+  font-weight:500;
+  font-size:x-large;
+}
