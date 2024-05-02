@@ -1,0 +1,43 @@
+.navbar {
+  background-color: #EF6900;
+  color: rgb(0, 0, 0);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 20px 40px;
+  margin: -8px;
+}
+
+.main {
+  background-color: #EF6900;
+  font-size: large;
+  font-weight: bold;
+  color: black;
+  border: solid;
+  padding: 10px;
+  border-radius: 15px;
+  border-color: #793000;
+}
+
+.main:hover {
+  cursor: pointer;
+  background-color: #793000;
+}
+
+.buttons {
+  display: flex;
+}
+
+.logreg {
+  padding: 8px;
+  margin-left: 10px;
+  background-color: black;
+  color: #ffffff;
+  border-radius: 7px;
+  border: none;
+  cursor: pointer;
+}
+
+.logreg:hover {
+  background-color: #808080;
+}
