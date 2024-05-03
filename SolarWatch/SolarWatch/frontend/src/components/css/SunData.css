@@ -1,0 +1,49 @@
+.card {
+  background-color: #7a7a7a;
+  justify-content: space-between;
+  align-items: center;
+
+  border-radius: 15px;
+  padding: 15px;
+}
+
+.cardinfo {
+  display: inline;
+  justify-content: space-evenly;
+  align-items: center;
+  font-size: l;
+  color: #ffffff;
+  font-weight: bold;
+}
+
+.infodiv {
+  display: flex;
+  justify-content: flex-start;
+}
+
+.pinfo {
+  margin-top: 0px;
+  margin-left: 10px;
+}
+
+.sundata {
+  display: flex;
+}
+
+.sun {
+  background-color: #242424;
+  color: #EF6900;
+  border: solid;
+  border-radius: 15px;
+  margin: 15px;
+  padding: 10px;
+  display: inline;
+  align-items: center;
+}
+
+.suntime {
+  margin-left: 25px;
+  margin-top: 5px;
+  font-family: Arial, Helvetica, sans-serif;
+  font-size: large;
+}
