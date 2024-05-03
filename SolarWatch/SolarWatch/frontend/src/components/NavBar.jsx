@@ -5,7 +5,7 @@ import "./NavBar.css"
 function NavBar({ current, setToken, token }){
   return(
     <nav className="navbar">
-      <Link to='/'>
+      <Link to={token == "" ? '/' : '/solar-watch'}>
         <button className='main'>SolarWatch</button>
       </Link>
       <div className="buttons">
