@@ -46,7 +46,8 @@ public class AuthController : ControllerBase
             return BadRequest(ModelState);
 
         var result = await _authService.LoginAsync(request.Email, request.Password);
-
+        //email@email.com account has no role == Index out of range
+        
         if (!result.Success)
         {
             AddErrors(result);
