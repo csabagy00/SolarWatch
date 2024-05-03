@@ -42,3 +42,14 @@
 .formDiv button[type="submit"]:hover {
     background-color: #a84900; /* Darker background color on hover */
 }
+
+#loginsuccess {
+  width: 100%; 
+  padding: 10px;
+  background-color: #EF6900;
+  color: rgb(0, 0, 0);
+  font-weight: bolder;
+  border: none;
+  border-radius: 10px;
+  font-size: 15px;
+}

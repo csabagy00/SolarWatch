@@ -1,7 +1,7 @@
 import { useState } from 'react'
 import './css/Form.css'
 
-function Login({ setToken }){
+function Login({ setToken, token }){
   const [email, setEmail] = useState("")
   const [password, setPassword] = useState("")
 
@@ -44,7 +44,11 @@ function Login({ setToken }){
           <label htmlFor='password'>Password:</label>
           <input type='password' id='password' value={password} onChange={(e) => setPassword(e.target.value)} required/>
         </div>
-        <button type='submit'>Login</button>
+          {token == "" ? 
+          <button type='submit'>Login</button>
+          : 
+          <button id="loginsuccess">Successful Login</button>
+          }
       </form>
     </div>
   )
