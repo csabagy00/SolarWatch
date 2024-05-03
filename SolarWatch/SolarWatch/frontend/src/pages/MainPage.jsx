@@ -34,18 +34,10 @@ function MainPage({ token }){
 
   return(
     <div className='maindiv'>
-      {token == "" ? 
-      (
-        <div className="notloggedin">
-          <p className="mustlogin">To use the feature of the site, please Log in or Register.</p>
-        </div>
-      ) :
-      (
-        <div>
-          <SearchForm setCity={setCity} setDate={setDate} city={city} date={date} handleSubmit={handleSubmit}/>
-          <SunData />
-        </div>
-      )}
+      <div>
+        <SearchForm setCity={setCity} setDate={setDate} city={city} date={date} handleSubmit={handleSubmit}/>
+        {data != null ? <SunData data={data}/> : <></>}
+      </div>
     </div>
   )
 
