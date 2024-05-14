@@ -10,12 +10,6 @@ public class UsersContext : IdentityDbContext<IdentityUser, IdentityRole, string
     {
     }
     
-    protected override void OnConfiguring(DbContextOptionsBuilder options)
-    {
-        var config = new ConfigurationBuilder().AddUserSecrets<Program>().Build();
-
-        options.UseSqlServer(config["E:\\user-secrets\\connection"]);
-    }
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
