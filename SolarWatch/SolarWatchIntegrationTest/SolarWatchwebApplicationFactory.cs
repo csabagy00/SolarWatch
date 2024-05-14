@@ -1,33 +1,30 @@
+using System.Net.Http.Headers;
+using System.Net.Http.Json;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc.Testing;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
-using Microsoft.VisualStudio.TestPlatform.TestHost;
+using SolarWatch;
+using SolarWatch.Contracts;
 using SolarWatch.Data;
+using Xunit;
 
 namespace SolarWatchIntegrationTest;
 
-public class SolarWatchwebApplicationFactory : WebApplicationFactory<Program>
+public class SolarWatchWebApplicationFactory : WebApplicationFactory<Program>
 {
     private readonly string _dbName = Guid.NewGuid().ToString();
-
-    /*public HttpClient Client { get; }
-    
-    public SolarWatchwebApplicationFactory(HttpClient client)
-    {
-        Client = client;
-    }*/
 
     protected override void ConfigureWebHost(IWebHostBuilder builder)
     {
         builder.ConfigureServices(services =>
         {
-            var solarWatchDbContectDescriptor = services.SingleOrDefault(d =>
+            var solarWatchDbContextDescriptor = services.SingleOrDefault(d =>
                 d.ServiceType == typeof(DbContextOptions<SolarWatchContext>));
             var usersDbContextDescriptor = services.SingleOrDefault(d =>
                 d.ServiceType == typeof(DbContextOptions<UsersContext>));
 
-            services.Remove(solarWatchDbContectDescriptor);
+            services.Remove(solarWatchDbContextDescriptor);
             services.Remove(usersDbContextDescriptor);
 
             services.AddDbContext<SolarWatchContext>(options =>
