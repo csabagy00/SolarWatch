@@ -1,18 +1,19 @@
 using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Infrastructure;
 
 namespace SolarWatch.Data;
 
 public class SolarWatchContext : DbContext
 {
+    public SolarWatchContext(DbContextOptions<SolarWatchContext> options) : base(options)
+    {
+    }
+    
     public DbSet<City> Cities { get; set; }
     
     public DbSet<Sun> Suns { get; set; }
     
     public DbSet<LatLon> LatLon { get; set; }
 
-    protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
-    {
-        var config = new ConfigurationBuilder().AddUserSecrets<Program>().Build();
-        optionsBuilder.UseSqlServer(config["E:\\user-secrets\\connection"]);
-    }
+
 }   
