@@ -1,6 +1,7 @@
 using System.Text;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Identity;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
 using SolarWatch.Data;
@@ -8,6 +9,10 @@ using SolarWatch.Services;
 using SolarWatch.Services.Authentication;
 
 var builder = WebApplication.CreateBuilder(args);
+
+ConfigurationBuilder configurationBuilder = new ConfigurationBuilder();
+IConfiguration secrets = configurationBuilder.AddUserSecrets<Program>().Build();
+IConfiguration config = configurationBuilder.AddJsonFile("appsettings.json", optional: false, reloadOnChange: true).Build();
 
 // Add services to the container.
 AddServices();
@@ -87,8 +92,16 @@ void ConfigureSwagger()
 
 void AddDbContext()
 {
-    builder.Services.AddDbContext<SolarWatchContext>();
-    builder.Services.AddDbContext<UsersContext>();
+    Console.WriteLine(config["E:\\user-secrets\\connection"]);
+    
+    builder.Services.AddDbContext<SolarWatchContext>(opt =>
+    {
+        opt.UseSqlServer(config["E:\\user-secrets\\connection"]);
+    });
+    builder.Services.AddDbContext<UsersContext>(opt =>
+    {
+        opt.UseSqlServer(config["E:\\user-secrets\\connection"]);
+    });
 }
 
 void AddAuthentication()
@@ -136,3 +149,5 @@ void AddIdentity()
         .AddRoles<IdentityRole>()
         .AddEntityFrameworkStores<UsersContext>();
 }
+
+public partial class Program { }
