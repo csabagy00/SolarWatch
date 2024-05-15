@@ -96,10 +96,6 @@ void AddDbContext()
     {
         opt.UseSqlServer(config["E:\\user-secrets\\connection"]);
     });
-    /*builder.Services.AddDbContext<UsersContext>(opt =>
-    {
-        opt.UseSqlServer(config["E:\\user-secrets\\connection"]);
-    });*/
 }
 
 void AddAuthentication()
