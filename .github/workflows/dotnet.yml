@@ -3,6 +3,11 @@
 
 name: .NET
 
+defaults:
+  run:
+    shell: bash
+    working-directory: ./SolarWatch
+    
 on:
   push:
     branches: [ "main" ]
