@@ -1,9 +1,12 @@
 import { useState } from 'react'
+import { useNavigate } from 'react-router-dom'
 import './css/Form.css'
 
 function Login({ setToken, token }){
   const [email, setEmail] = useState("")
   const [password, setPassword] = useState("")
+
+  const navigate = useNavigate();
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -26,6 +29,10 @@ function Login({ setToken, token }){
         console.log("Login successful")
         const result = await response.json()
         setToken(result.token)
+
+        setTimeout(() => {
+          navigate("/solar-watch")
+        }, 2000)
       }
       
     } catch (error) {
