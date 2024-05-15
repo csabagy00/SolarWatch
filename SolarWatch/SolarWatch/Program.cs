@@ -106,7 +106,9 @@ void AddAuthentication()
             var configJson = new ConfigurationBuilder()
                 .AddJsonFile("appsettings.json", optional: false, reloadOnChange: true)
                 .Build();
-        
+
+            var validIssuer = Environment.GetEnvironmentVariable("VALID_ISSUER") ?? configJson["AppSettings:ValidIssuer"];
+            var validAudience = Environment.GetEnvironmentVariable("VALID_AUDIENCE") ?? configJson["AppSettings:ValidAudience"];
             var secretValue = Environment.GetEnvironmentVariable("ISSUER_SIGNINGKEY_VAR") ?? secrets["securitykey"];
         
             options.TokenValidationParameters = new TokenValidationParameters()
@@ -116,8 +118,8 @@ void AddAuthentication()
                 ValidateAudience = true,
                 ValidateLifetime = true,
                 ValidateIssuerSigningKey = true,
-                ValidIssuer = configJson["AppSettings:ValidIssuer"],
-                ValidAudience = configJson["AppSettings:ValidAudience"],
+                ValidIssuer = validIssuer,
+                ValidAudience = validAudience,
                 IssuerSigningKey = new SymmetricSecurityKey(
                     Encoding.UTF8.GetBytes(secretValue))
             };
