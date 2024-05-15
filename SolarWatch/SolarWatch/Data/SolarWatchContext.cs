@@ -1,9 +1,11 @@
+using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 
 namespace SolarWatch.Data;
 
-public class SolarWatchContext : DbContext
+public class SolarWatchContext : IdentityDbContext<IdentityUser, IdentityRole, string>
 {
     public SolarWatchContext(DbContextOptions<SolarWatchContext> options) : base(options)
     {
@@ -15,5 +17,8 @@ public class SolarWatchContext : DbContext
     
     public DbSet<LatLon> LatLon { get; set; }
 
-
+    protected override void OnModelCreating(ModelBuilder modelBuilder)
+    {
+        base.OnModelCreating(modelBuilder);
+    }
 }   
