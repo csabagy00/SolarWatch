@@ -86,7 +86,7 @@ public class SolarWatchControllerIntegrationTest : IClassFixture<SolarWatchWebAp
     [Fact]
     public async Task SuccessfulRegistration()
     {
-        RegistrationRequest testReg = new RegistrationRequest("clientTest@email.com", "Test Client", "12345678");
+        RegistrationRequest testReg = new RegistrationRequest("clientTest@email.com", "TestClient", "12345678");
         
         var registerResponse = await _client.PostAsJsonAsync("Auth/Register", testReg);
         registerResponse.EnsureSuccessStatusCode();
