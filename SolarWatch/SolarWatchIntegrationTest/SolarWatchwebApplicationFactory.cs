@@ -21,18 +21,10 @@ public class SolarWatchWebApplicationFactory : WebApplicationFactory<Program>
         {
             var solarWatchDbContextDescriptor = services.SingleOrDefault(d =>
                 d.ServiceType == typeof(DbContextOptions<SolarWatchContext>));
-            var usersDbContextDescriptor = services.SingleOrDefault(d =>
-                d.ServiceType == typeof(DbContextOptions<UsersContext>));
 
             services.Remove(solarWatchDbContextDescriptor);
-            services.Remove(usersDbContextDescriptor);
 
             services.AddDbContext<SolarWatchContext>(options =>
-            {
-                options.UseInMemoryDatabase(_dbName);
-            });
-
-            services.AddDbContext<UsersContext>(options =>
             {
                 options.UseInMemoryDatabase(_dbName);
             });
@@ -42,12 +34,6 @@ public class SolarWatchWebApplicationFactory : WebApplicationFactory<Program>
             var solarContext = scope.ServiceProvider.GetRequiredService<SolarWatchContext>();
             solarContext.Database.EnsureDeleted();
             solarContext.Database.EnsureCreated();
-
-            var userContext = scope.ServiceProvider.GetRequiredService<UsersContext>();
-            userContext.Database.EnsureDeleted();
-            userContext.Database.EnsureCreated();
-            
-            
         });
     }
 }
