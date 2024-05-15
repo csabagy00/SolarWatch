@@ -103,14 +103,11 @@ void AddAuthentication()
     builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
         .AddJwtBearer(options =>
         {
-            var config = new ConfigurationBuilder().AddUserSecrets<Program>().Build();
             var configJson = new ConfigurationBuilder()
                 .AddJsonFile("appsettings.json", optional: false, reloadOnChange: true)
                 .Build();
         
-            var secretValue = config["securitykey"];
-
-            Console.WriteLine(secretValue);
+            var secretValue = Environment.GetEnvironmentVariable("ISSUER_SIGNINGKEY") ?? secrets["securitykey"];
         
             options.TokenValidationParameters = new TokenValidationParameters()
             {
