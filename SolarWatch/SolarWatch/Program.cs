@@ -107,7 +107,7 @@ void AddAuthentication()
                 .AddJsonFile("appsettings.json", optional: false, reloadOnChange: true)
                 .Build();
         
-            var secretValue = Environment.GetEnvironmentVariable("ISSUER_SIGNINGKEY") ?? secrets["securitykey"];
+            var secretValue = Environment.GetEnvironmentVariable("ISSUER_SIGNINGKEY_VAR") ?? secrets["securitykey"];
         
             options.TokenValidationParameters = new TokenValidationParameters()
             {
