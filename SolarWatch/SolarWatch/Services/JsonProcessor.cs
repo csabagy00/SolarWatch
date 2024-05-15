@@ -1,4 +1,5 @@
 using System.Text.Json;
+using Microsoft.IdentityModel.Tokens;
 
 namespace SolarWatch.Services;
 
@@ -11,14 +12,14 @@ public class JsonProcessor : IJsonProcessor
 
         try
         {
-            Sun riseSet = new Sun
-            {
-                Sunrise = results.GetProperty("sunrise").GetString(),
-                Sunset = results.GetProperty("sunset").GetString(),
-                Date = date,
-                City = city
-            };
+            string sunrise = results.GetProperty("sunrise").GetString();
+            string sunset = results.GetProperty("sunset").GetString();
 
+            Sun? riseSet = CreateSun(sunrise, sunset, date, city);
+
+            if (riseSet == null)
+                throw new Exception();
+                    
             return riseSet;
         }
         catch (Exception e)
@@ -55,6 +56,26 @@ public class JsonProcessor : IJsonProcessor
             State = element.TryGetProperty("state", out element) ? element.GetProperty("state").ToString() : null
         };
 
+        return city;
+    }
+
+    public Sun? CreateSun(string sunrise, string sunset, string date, string city)
+    {
+        if (sunrise.IsNullOrEmpty() || sunset.IsNullOrEmpty())
+            return null;
+        
+        Sun sun = new Sun { Sunrise = sunrise, Sunset = sunset, Date = date, City = city};
+
+        return sun;
+    }
+
+    public City? CreateCity(string name, string country, string? state)
+    {
+        if (name.IsNullOrEmpty() || country.IsNullOrEmpty())
+            return null;
+        
+        City city = new City { Name = name, Country = country, State = state};
+        
         return city;
     }
 }
