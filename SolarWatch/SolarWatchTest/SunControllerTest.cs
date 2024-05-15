@@ -1,4 +1,5 @@
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
 using Moq;
 using SolarWatch;
@@ -21,11 +22,13 @@ public class SunControllerTest
     [SetUp]
     public void Setup()
     {
+        DbContextOptions<SolarWatchContext> options = new DbContextOptions<SolarWatchContext>();
+        
         _loggerMock = new Mock<ILogger<SunController>>();
         _jsonProcessorMock = new Mock<IJsonProcessor>();
         _sunsetSunriseApiMock = new Mock<ISunsetSunriseApi>();
         _geocodingMock = new Mock<IGeocodingApi>();
-        _dbContext = new Mock<SolarWatchContext>();
+        _dbContext = new Mock<SolarWatchContext>(options);
         _controller = new SunController(_loggerMock.Object, _jsonProcessorMock.Object, _geocodingMock.Object, _sunsetSunriseApiMock.Object, _dbContext.Object);
     }
 
