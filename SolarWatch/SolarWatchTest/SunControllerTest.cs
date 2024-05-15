@@ -18,6 +18,7 @@ public class SunControllerTest
     private Mock<IGeocodingApi> _geocodingMock;
     private Mock<SolarWatchContext> _dbContext;
     private SunController _controller;
+    private IJsonProcessor _jsonProcessor;
 
     [SetUp]
     public void Setup()
@@ -30,60 +31,110 @@ public class SunControllerTest
         _geocodingMock = new Mock<IGeocodingApi>();
         _dbContext = new Mock<SolarWatchContext>(options);
         _controller = new SunController(_loggerMock.Object, _jsonProcessorMock.Object, _geocodingMock.Object, _sunsetSunriseApiMock.Object, _dbContext.Object);
+        _jsonProcessor = new JsonProcessor();
     }
 
     [Test]
-    public async Task SunGetReturnsNotFoundResultIfSunsetSunriseFails()
+    public async Task SuccessfulSunCreate()
     {
-        //Arrange
-        _sunsetSunriseApiMock.Setup(x => x.GetSun(It.IsAny<double>(), It.IsAny<double>(), It.IsAny<string>()))
-            .Throws(new Exception());
-        
-        //Act
-        var result = await _controller.SunGet("szeged", "2024-03-31");
-        
-        //Assert
-        Assert.IsInstanceOf(typeof(NotFoundObjectResult), result.Result);
+        Sun actual = _jsonProcessor.CreateSun("06:00:00 AM", "18:00:00 PM", "2024-05-06", "szeged");
+
+        Sun expected = new Sun { Sunrise = "06:00:00 AM", Sunset = "18:00:00 PM", Date = "2024-05-06", City = "szeged" };
+
+        Assert.That(actual.Sunrise, Is.EqualTo(expected.Sunrise));
+        Assert.That(actual.Sunset, Is.EqualTo(expected.Sunset));
+        Assert.That(actual.Date, Is.EqualTo(expected.Date));
+        Assert.That(actual.City, Is.EqualTo(expected.City));
+        Assert.That(actual, Is.InstanceOf<Sun>());
     }
 
-
     [Test]
-    public async Task SunGetReturnsNotFoundResultIfGeoCodingFails()
+    public async Task SunCreateReturnsNullIfSunriseIsEmpty()
     {
-        //Arrange
-        var cityData = "{}";
-        _geocodingMock.Setup(x => x.GetLatLon(cityData)).Throws(new Exception());
-
-        //Act
-        var result = await _controller.SunGet("szeged", "2024-03-29");
-
-        //Assert
-        Assert.IsInstanceOf(typeof(NotFoundObjectResult), result.Result);
+        Sun actual = _jsonProcessor.CreateSun("", "18:00:00 PM", "2024-05-06", "szeged");
+        
+        Assert.That(actual, Is.EqualTo(null));
+    }
+    
+    [Test]
+    public async Task SunCreateReturnsNullIfSunriseIsNull()
+    {
+        Sun actual = _jsonProcessor.CreateSun(null, "18:00:00 PM", "2024-05-06", "szeged");
+        
+        Assert.That(actual, Is.EqualTo(null));
+    }
+    
+    [Test]
+    public async Task SunCreateReturnsNullIfSunsetIsEmpty()
+    {
+        Sun actual = _jsonProcessor.CreateSun("06:00:00 AM", "", "2024-05-06", "szeged");
+        
+        Assert.That(actual, Is.EqualTo(null));
+    }
+    
+    [Test]
+    public async Task SunCreateReturnsNullIfSunsetIsNull()
+    {
+        Sun actual = _jsonProcessor.CreateSun("06:00:00 AM", null, "2024-05-06", "szeged");
+        
+        Assert.That(actual, Is.EqualTo(null));
     }
 
+    [Test]
+    public async Task CityCreateSuccessfulWithStateNull()
+    {
+        City actual = _jsonProcessor.CreateCity("szeged", "HU", null);
+
+        City expected = new City { Name = "szeged", Country = "HU"};
+
+        Assert.That(actual, Is.InstanceOf<City>());
+        Assert.That(actual.Name, Is.EqualTo(expected.Name));
+        Assert.That(actual.Country, Is.EqualTo(expected.Country));
+        Assert.That(actual.State, Is.EqualTo(null));
+    }
+    
+    [Test]
+    public async Task CityCreateSuccessfulWithStateNotNull()
+    {
+        City actual = _jsonProcessor.CreateCity("los angeles", "USA", "CA");
+
+        City expected = new City { Name = "los angeles", Country = "USA", State = "CA"};
+
+        Assert.That(actual, Is.InstanceOf<City>());
+        Assert.That(actual.Name, Is.EqualTo(expected.Name));
+        Assert.That(actual.Country, Is.EqualTo(expected.Country));
+        Assert.That(actual.State, Is.EqualTo(expected.State));
+    }
 
     [Test]
-    public async Task SunGetReturnsOkResult()
+    public async Task CityCreateReturnsNullIfNameIsEmpty()
     {
-        //Arrange
-        var expectedSun = new Sun();
-        var expectedLatLon = new LatLon();
-        var sunsetData = "{}";
-        var latLonData = "{}";
+        City actual = _jsonProcessor.CreateCity("", "USA", "CA");
 
-        _geocodingMock.Setup(x => x.GetLatLon(It.IsAny<string>())).ReturnsAsync(latLonData);
-        _sunsetSunriseApiMock.Setup(x => x.GetSun(It.IsAny<double>(), It.IsAny<double>(), It.IsAny<string>()))
-            .ReturnsAsync(sunsetData);
-        _jsonProcessorMock.Setup(x => x.ProcessLatLon(latLonData)).Returns(expectedLatLon);
-        _jsonProcessorMock.Setup(x => x.ProcessSun(sunsetData, It.IsAny<string>(), It.IsAny<string>()))
-            .Returns(expectedSun);
-        
-        //Act
-        var result = await _controller.SunGet("szeged", "2023-03-29");
-        
-        //Assert
-        Assert.IsInstanceOf(typeof(OkObjectResult), result.Result);
-        Assert.That(((OkObjectResult)result.Result).Value, Is.EqualTo(expectedSun));
+        Assert.That(actual, Is.EqualTo(null));
+    }
+    
+    [Test]
+    public async Task CityCreateReturnsNullIfNameIsNull()
+    {
+        City actual = _jsonProcessor.CreateCity(null, "USA", "CA");
 
+        Assert.That(actual, Is.EqualTo(null));
+    }
+    
+    [Test]
+    public async Task CityCreateReturnsNullIfCountryIsEmpty()
+    {
+        City actual = _jsonProcessor.CreateCity("los angeles", "", "CA");
+
+        Assert.That(actual, Is.EqualTo(null));
+    }
+    
+    [Test]
+    public async Task CityCreateReturnsNullIfCountryIsNull()
+    {
+        City actual = _jsonProcessor.CreateCity("los angeles", null, "CA");
+
+        Assert.That(actual, Is.EqualTo(null));
     }
 }
