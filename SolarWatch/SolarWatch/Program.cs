@@ -92,16 +92,14 @@ void ConfigureSwagger()
 
 void AddDbContext()
 {
-    Console.WriteLine(config["E:\\user-secrets\\connection"]);
-    
     builder.Services.AddDbContext<SolarWatchContext>(opt =>
     {
         opt.UseSqlServer(config["E:\\user-secrets\\connection"]);
     });
-    builder.Services.AddDbContext<UsersContext>(opt =>
+    /*builder.Services.AddDbContext<UsersContext>(opt =>
     {
         opt.UseSqlServer(config["E:\\user-secrets\\connection"]);
-    });
+    });*/
 }
 
 void AddAuthentication()
@@ -147,7 +145,7 @@ void AddIdentity()
             options.Password.RequireLowercase = false;
         })
         .AddRoles<IdentityRole>()
-        .AddEntityFrameworkStores<UsersContext>();
+        .AddEntityFrameworkStores<SolarWatchContext>();
 }
 
 public partial class Program { }
