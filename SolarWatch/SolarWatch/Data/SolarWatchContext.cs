@@ -10,10 +10,6 @@ public class SolarWatchContext : IdentityDbContext<IdentityUser, IdentityRole, s
     public SolarWatchContext(DbContextOptions<SolarWatchContext> options) : base(options)
     {
     }
-
-    public SolarWatchContext()
-    {
-    }
     
     public DbSet<City> Cities { get; set; }
     
