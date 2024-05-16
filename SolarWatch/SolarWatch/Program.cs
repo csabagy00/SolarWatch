@@ -103,12 +103,8 @@ void AddAuthentication()
     builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
         .AddJwtBearer(options =>
         {
-            var configJson = new ConfigurationBuilder()
-                .AddJsonFile("appsettings.json", optional: false, reloadOnChange: true)
-                .Build();
-
-            var validIssuer = Environment.GetEnvironmentVariable("VALID_ISSUER") ?? configJson["AppSettings:ValidIssuer"];
-            var validAudience = Environment.GetEnvironmentVariable("VALID_AUDIENCE") ?? configJson["AppSettings:ValidAudience"];
+            var validIssuer = Environment.GetEnvironmentVariable("VALID_ISSUER") ?? config["AppSettings:ValidIssuer"];
+            var validAudience = Environment.GetEnvironmentVariable("VALID_AUDIENCE") ?? config["AppSettings:ValidAudience"];
             var secretValue = Environment.GetEnvironmentVariable("ISSUER_SIGNINGKEY_VAR") ?? secrets["securitykey"];
         
             options.TokenValidationParameters = new TokenValidationParameters()
