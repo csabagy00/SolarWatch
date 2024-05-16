@@ -10,6 +10,13 @@ namespace SolarWatch.Services.Authentication;
 public class TokenService : ITokenService
 {
     private const int ExpirationMinutes = 30;
+    private IConfiguration _config;
+
+    public TokenService(IConfiguration config)
+    {
+        _config = config;
+    }
+    
     
     public string CreateToken(IdentityUser user, string role)
     {
@@ -66,13 +73,15 @@ public class TokenService : ITokenService
 
     private SigningCredentials CreateSigningCredentials()
     {
-        var config = new ConfigurationBuilder().AddUserSecrets<Program>().Build();
+        /*var config = new ConfigurationBuilder()
+            .AddJsonFile("appsettings.json", optional: false, reloadOnChange: true)
+            .Build();*/
 
-        Console.WriteLine($"From TokenServ : {config["securitykey"]}");
+        //Console.WriteLine($"From TokenServ : {config["securitykey"]}");
         
         return new SigningCredentials(
             new SymmetricSecurityKey(
-                Encoding.UTF8.GetBytes(config["securitykey"])),
+                Encoding.UTF8.GetBytes(_config["AppSettings:IssuerSigningKey"]!)),
             SecurityAlgorithms.HmacSha256);
     }
 }
