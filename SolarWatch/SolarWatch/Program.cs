@@ -105,7 +105,7 @@ void AddAuthentication()
         {
             var validIssuer = Environment.GetEnvironmentVariable("VALID_ISSUER") ?? config["AppSettings:ValidIssuer"];
             var validAudience = Environment.GetEnvironmentVariable("VALID_AUDIENCE") ?? config["AppSettings:ValidAudience"];
-            var secretValue = Environment.GetEnvironmentVariable("ISSUER_SIGNINGKEY_VAR") ?? secrets["securitykey"];
+            var secretValue = Environment.GetEnvironmentVariable("ISSUER_SIGNINGKEY_VAR") ?? config["AppSettings:IssuerSigningKey"];
         
             options.TokenValidationParameters = new TokenValidationParameters()
             {
@@ -117,7 +117,7 @@ void AddAuthentication()
                 ValidIssuer = validIssuer,
                 ValidAudience = validAudience,
                 IssuerSigningKey = new SymmetricSecurityKey(
-                    Encoding.UTF8.GetBytes(secretValue))
+                    Encoding.UTF8.GetBytes(secretValue!))
             };
         });
 }
